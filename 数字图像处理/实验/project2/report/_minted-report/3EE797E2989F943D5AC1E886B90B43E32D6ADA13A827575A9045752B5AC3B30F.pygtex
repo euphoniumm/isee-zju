@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{clear}\PYG{p}{;}\PYG{+w}{ }\PYG{n+nb}{clc}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{close}\PYG{+w}{ }\PYG{l+s}{all}
+\PYG{c}{\PYGZpc{}\PYGZpc{} 主函数}
+\PYG{n+nb}{image}\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{imread}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}./5\PYGZus{}7.TIF\PYGZsq{}}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} 原图像}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n+nb}{image}\PYG{p}{)}
+\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}original image\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c}{\PYGZpc{} 加噪图像}
+\PYG{n}{image\PYGZus{}noise}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{iamnoise}\PYG{p}{(}\PYG{n+nb}{image}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}salt \PYGZam{} pepper\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.2}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{image\PYGZus{}noise}\PYG{p}{)}
+\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}image with salt \PYGZam{} papper noise\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c}{\PYGZpc{} 恢复图像}
+\PYG{n}{image\PYGZus{}filtered}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{median\PYGZus{}filter}\PYG{p}{(}\PYG{n}{image\PYGZus{}noise}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{)}
+\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{image\PYGZus{}filtered}\PYG{p}{)}
+\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}image after median filter\PYGZsq{}}\PYG{p}{)}
+\PYG{c}{\PYGZpc{}\PYGZpc{} 3*3中值滤波器}
+\PYG{k}{function}\PYG{+w}{ }image\PYGZus{}filter\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{median\PYGZus{}filter}\PYG{p}{(}image\PYG{p}{)}\PYG{+w}{ }\PYG{c}{\PYGZpc{} 彩色图中值滤波器}
+
+\PYG{c}{\PYGZpc{} 获取图像大小}
+\PYG{p}{[}\PYG{n}{rows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{cols}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{]}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{size}\PYG{p}{(}\PYG{n+nb}{image}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} 创建矩阵，用于存储结果}
+\PYG{n}{image\PYGZus{}filter}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{rows}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{cols}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}uint8\PYGZsq{}}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} 对边界像素进行扩展}
+\PYG{n}{image\PYGZus{}extend}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{rows}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{cols}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}uint8\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{image\PYGZus{}extend}\PYG{p}{(:,:)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{padarray}\PYG{p}{(}\PYG{n+nb}{image}\PYG{p}{(:,:),}\PYG{+w}{ }\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{]);}
+
+\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{rows}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{cols}
+\PYG{+w}{		}\PYG{n}{Rect}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{double}\PYG{p}{(}\PYG{n}{image\PYGZus{}extend}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{:}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{:}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{));}
+\PYG{+w}{		}\PYG{n}{image\PYGZus{}filter}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{uint8}\PYG{p}{(}\PYG{n+nb}{median}\PYG{p}{(}\PYG{n}{Rect}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}all\PYGZsq{}}\PYG{p}{));}
+\PYG{+w}{	}\PYG{k}{end}
+\PYG{k}{end}
+
+\PYG{k}{end}
+\end{Verbatim}

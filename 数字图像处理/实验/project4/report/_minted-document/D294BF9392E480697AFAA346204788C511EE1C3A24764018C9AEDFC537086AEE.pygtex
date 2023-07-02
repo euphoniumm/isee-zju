@@ -1,0 +1,75 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{}\PYGZpc{}腐蚀与膨胀}
+\PYG{k}{function}\PYG{+w}{ }[imd,ime]\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{Erode\PYGZus{}Dilation}\PYG{p}{(}ima,A\PYG{p}{)}
+\PYG{+w}{	}\PYG{c}{\PYGZpc{}ima为输入图像，A为输入的3*3结构元}
+\PYG{+w}{	}\PYG{c}{\PYGZpc{}imd为输出的膨胀图，ime为输出的腐蚀图}
+\PYG{+w}{	}\PYG{p}{[}\PYG{n}{m}\PYG{p}{,}\PYG{n}{n}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{ima}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{imd}\PYG{p}{=}\PYG{n+nb}{ones}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,}\PYG{n}{n}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{ime}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,}\PYG{n}{n}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{p}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{q}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{);}
+\PYG{+w}{	}\PYG{c}{\PYGZpc{}将输入图像四周添加一圈0元素}
+\PYG{+w}{	}\PYG{n}{imb}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{m}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{n}\PYG{o}{+}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{m}\PYG{o}{+}\PYG{l+m+mi}{1}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{n}\PYG{o}{+}\PYG{l+m+mi}{1}
+\PYG{+w}{			}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)=}\PYG{n}{ima}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{		}\PYG{k}{end}
+\PYG{+w}{	}\PYG{k}{end}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{m}\PYG{o}{+}\PYG{l+m+mi}{1}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{n}\PYG{o}{+}\PYG{l+m+mi}{1}
+\PYG{+w}{			}\PYG{c}{\PYGZpc{}膨胀计算}
+\PYG{+w}{			}\PYG{n}{p}\PYG{p}{=}\PYG{n}{A}\PYG{o}{\PYGZam{}}\PYG{p}{[}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{				 }\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{				 }\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)];}
+\PYG{+w}{				}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{p}\PYG{o}{==}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{))}
+\PYG{+w}{					}\PYG{n}{imd}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)=}\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{				}\PYG{k}{end}
+\PYG{+w}{			}\PYG{c}{\PYGZpc{}腐蚀计算}
+\PYG{+w}{			}\PYG{n}{q}\PYG{p}{=}\PYG{n}{A}\PYG{o}{\PYGZam{}}\PYG{p}{[}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{				 }\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{				 }\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{),}\PYG{n}{imb}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)];}
+\PYG{+w}{			}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{q}\PYG{o}{==}\PYG{n}{A}\PYG{p}{)}
+\PYG{+w}{				}\PYG{n}{ime}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)=}\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{			}\PYG{k}{end}
+\PYG{+w}{		}\PYG{k}{end}
+\PYG{+w}{	}\PYG{k}{end}
+\PYG{k}{end}
+\PYG{c}{\PYGZpc{}\PYGZpc{}交集、差分和互补}
+\PYG{n}{img}\PYG{o}{\PYGZbs{}}\PYG{n}{\PYGZus{}inter}\PYG{p}{=}\PYG{n}{img1}\PYG{o}{\PYGZam{}}\PYG{n}{img2}\PYG{p}{;}
+\PYG{n}{img}\PYG{o}{\PYGZbs{}}\PYG{n}{\PYGZus{}differ}\PYG{p}{=}\PYG{n}{img1}\PYG{o}{\PYGZam{}}\PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{img2}\PYG{p}{);}
+\PYG{n}{img}\PYG{o}{\PYGZbs{}}\PYG{n}{\PYGZus{}complete}\PYG{p}{=}\PYG{o}{\PYGZti{}}\PYG{n}{img1}\PYG{p}{;}
+\PYG{c}{\PYGZpc{}\PYGZpc{}主程序}
+\PYG{n+nb}{clear}\PYG{p}{;}\PYG{n+nb}{close}\PYG{+w}{ }\PYG{n+nb}{all}\PYG{p}{;}\PYG{n+nb}{clc}\PYG{p}{;}
+\PYG{n}{SE}\PYG{p}{=}\PYG{n+nb}{ones}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{3}\PYG{p}{);}\PYG{c}{\PYGZpc{}结构元}
+\PYG{n}{img1\PYGZus{}ones}\PYG{p}{=}\PYG{l+m+mi}{255}\PYG{o}{*}\PYG{n+nb}{ones}\PYG{p}{(}\PYG{l+m+mi}{339}\PYG{p}{,}\PYG{l+m+mi}{338}\PYG{p}{);}\PYG{c}{\PYGZpc{}全1图}
+\PYG{n}{img2\PYGZus{}zeros}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{1294}\PYG{p}{,}\PYG{l+m+mi}{1247}\PYG{p}{);}\PYG{c}{\PYGZpc{}全0图}
+\PYG{n}{img1}\PYG{p}{=}\PYG{n+nb}{imread}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}fig1.tif\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{img2}\PYG{p}{=}\PYG{n+nb}{imread}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}fig2.tif\PYGZsq{}}\PYG{p}{);}
+\PYG{c}{\PYGZpc{}腐蚀与膨胀}
+\PYG{p}{[}\PYG{n}{imd1}\PYG{p}{,}\PYG{n}{ime1}\PYG{p}{]=}\PYG{n}{Erode\PYGZus{}Dilation}\PYG{p}{(}\PYG{n}{img1}\PYG{p}{,}\PYG{n}{SE}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{imd2}\PYG{p}{,}\PYG{n}{ime2}\PYG{p}{]=}\PYG{n}{Erode\PYGZus{}Dilation}\PYG{p}{(}\PYG{n}{img2}\PYG{p}{,}\PYG{n}{SE}\PYG{p}{);}
+\PYG{c}{\PYGZpc{}交集、差分和互补}
+\PYG{n}{img1\PYGZus{}inter}\PYG{p}{=}\PYG{n}{img1\PYGZus{}ones}\PYG{o}{\PYGZam{}}\PYG{n}{img1}\PYG{p}{;}
+\PYG{n}{img1\PYGZus{}differ}\PYG{p}{=}\PYG{n}{img1\PYGZus{}ones}\PYG{o}{\PYGZam{}}\PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{img1}\PYG{p}{);}
+\PYG{n}{img1\PYGZus{}complete}\PYG{p}{=}\PYG{o}{\PYGZti{}}\PYG{n}{img1}\PYG{p}{;}
+\PYG{n}{img2\PYGZus{}inter}\PYG{p}{=}\PYG{n}{img2\PYGZus{}zeros}\PYG{o}{\PYGZam{}}\PYG{n}{img2}\PYG{p}{;}
+\PYG{n}{img2\PYGZus{}differ}\PYG{p}{=}\PYG{n}{img2\PYGZus{}zeros}\PYG{o}{\PYGZam{}}\PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n}{img2}\PYG{p}{);}
+\PYG{n}{img2\PYGZus{}complete}\PYG{p}{=}\PYG{o}{\PYGZti{}}\PYG{n}{img2}\PYG{p}{;}
+\PYG{c}{\PYGZpc{}作图}
+\PYG{n+nb}{figure}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{131}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img1}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}original\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{132}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{imd1}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}dilate\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{133}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{ime1}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}erode\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{figure}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{131}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img2}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}original\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{132}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{imd2}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}dilate\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{133}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{ime2}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}erode\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{figure}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{131}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img1\PYGZus{}inter}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}inter\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{132}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img1\PYGZus{}differ}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}differencing\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{133}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img1\PYGZus{}complete}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}completment\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{figure}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{131}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img2\PYGZus{}inter}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}inter\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{132}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img2\PYGZus{}differ}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}differencing\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{133}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img2\PYGZus{}complete}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}completment\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

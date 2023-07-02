@@ -1,0 +1,40 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{clear}\PYG{+w}{ }\PYG{n+nb}{all}\PYG{p}{;}
+\PYG{n}{close}\PYG{+w}{ }\PYG{l+s}{all}\PYG{p}{;}
+\PYG{n+nb}{clc}\PYG{p}{;}
+
+\PYG{n}{img}\PYG{p}{=}\PYG{n+nb}{imread}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}fig.tif\PYGZsq{}}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{m}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{img}\PYG{p}{);}
+
+\PYG{n}{imgn}\PYG{p}{=}\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,}\PYG{n}{n}\PYG{p}{);}\PYG{+w}{        }\PYG{c}{\PYGZpc{}边界标记图像}
+\PYG{n}{ed}\PYG{p}{=[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{n}{1}\PYG{+w}{ }\PYG{l+s}{0}\PYG{p}{;}\PYG{n}{1}\PYG{+w}{ }\PYG{l+s}{1}\PYG{p}{;}\PYG{n}{0}\PYG{+w}{ }\PYG{l+s}{1}\PYG{p}{;}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{];}\PYG{+w}{ }\PYG{c}{\PYGZpc{}从左上角像素，逆时针搜索}
+\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{m}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{p}{=}\PYG{l+m+mi}{2}\PYG{p}{:}\PYG{n}{n}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{img}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{imgn}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{+w}{      }\PYG{c}{\PYGZpc{}当前是没标记的白色像素}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{img}\PYG{p}{(}\PYG{n+nb}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n+nb}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n+nb}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)))}\PYG{o}{\PYGZti{}=}\PYG{l+m+mi}{9}\PYG{+w}{    }\PYG{c}{\PYGZpc{}块内部的白像素不标记}
+\PYG{+w}{            }\PYG{n}{ii}\PYG{p}{=}\PYG{n+nb}{i}\PYG{p}{;}\PYG{+w}{         }\PYG{c}{\PYGZpc{}像素块内部搜寻使用的坐标}
+\PYG{+w}{            }\PYG{n}{jj}\PYG{p}{=}\PYG{n+nb}{j}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n}{imgn}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)=}\PYG{l+m+mi}{2}\PYG{p}{;}\PYG{+w}{    }\PYG{c}{\PYGZpc{}本像素块第一个标记的边界，第一个边界像素为2}
+
+\PYG{+w}{            }\PYG{k}{while}\PYG{+w}{ }\PYG{n}{imgn}\PYG{p}{(}\PYG{n}{ii}\PYG{p}{,}\PYG{n}{jj}\PYG{p}{)}\PYG{o}{\PYGZti{}=}\PYG{l+m+mi}{2}\PYG{+w}{    }\PYG{c}{\PYGZpc{}是否沿着像素块搜寻一圈了。}
+\PYG{+w}{                }\PYG{k}{for}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{l+m+mi}{8}\PYG{+w}{           }\PYG{c}{\PYGZpc{}逆时针八邻域搜索}
+\PYG{+w}{                    }\PYG{n}{tmpi}\PYG{p}{=}\PYG{n}{ii}\PYG{o}{+}\PYG{n}{ed}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{+w}{        }\PYG{c}{\PYGZpc{}八邻域临时坐标}
+\PYG{+w}{                    }\PYG{n}{tmpj}\PYG{p}{=}\PYG{n}{jj}\PYG{o}{+}\PYG{n}{ed}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{+w}{                    }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{img}\PYG{p}{(}\PYG{n}{tmpi}\PYG{p}{,}\PYG{n}{tmpj}\PYG{p}{)}\PYG{o}{==}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{imgn}\PYG{p}{(}\PYG{n}{tmpi}\PYG{p}{,}\PYG{n}{tmpj}\PYG{p}{)}\PYG{o}{\PYGZti{}=}\PYG{l+m+mi}{2}\PYG{+w}{  }\PYG{c}{\PYGZpc{}搜索到新边界，并且没有搜索一圈}
+\PYG{+w}{                        }\PYG{n}{ii}\PYG{p}{=}\PYG{n}{tmpi}\PYG{p}{;}\PYG{+w}{        }\PYG{c}{\PYGZpc{}更新内部搜寻坐标，继续搜索}
+\PYG{+w}{                        }\PYG{n}{jj}\PYG{p}{=}\PYG{n}{tmpj}\PYG{p}{;}
+\PYG{+w}{                        }\PYG{n}{imgn}\PYG{p}{(}\PYG{n}{ii}\PYG{p}{,}\PYG{n}{jj}\PYG{p}{)=}\PYG{l+m+mi}{1}\PYG{p}{;}\PYG{+w}{  }\PYG{c}{\PYGZpc{}边界标记图像该像素标记，普通边界为1}
+\PYG{+w}{                        }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{                    }\PYG{k}{end}
+\PYG{+w}{                }\PYG{k}{end}
+\PYG{+w}{            }\PYG{k}{end}
+
+\PYG{+w}{        }\PYG{k}{end}
+\PYG{+w}{    }\PYG{k}{end}
+\PYG{k}{end}
+\PYG{k}{end}
+\PYG{n+nb}{figure}\PYG{p}{;}
+\PYG{n}{imgn}\PYG{p}{=}\PYG{n}{imgn}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{imgn}\PYG{p}{,[]);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}边界\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{img}\PYG{p}{);}\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}原图\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

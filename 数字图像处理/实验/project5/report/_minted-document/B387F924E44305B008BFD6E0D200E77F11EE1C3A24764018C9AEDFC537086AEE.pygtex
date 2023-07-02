@@ -1,0 +1,45 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{}\PYGZpc{} mian}
+\PYG{n+nb}{clc}\PYG{p}{;}\PYG{n+nb}{clear}\PYG{p}{;}\PYG{n+nb}{close}\PYG{+w}{ }\PYG{n+nb}{all}\PYG{p}{;}
+\PYG{n}{I}\PYG{+w}{ }\PYG{p}{=}\PYG{n+nb}{imread}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Fig1043.tif\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{level}\PYG{+w}{ }\PYG{p}{=}\PYG{n}{global\PYGZus{}threshold}\PYG{p}{(}\PYG{n}{I}\PYG{p}{);}
+\PYG{n}{J}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{imbinarize}\PYG{p}{(}\PYG{n}{I}\PYG{p}{,}\PYG{n}{level}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{121}\PYG{p}{)}
+\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{I}\PYG{p}{);}
+\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}original image\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{subplot}\PYG{p}{(}\PYG{l+m+mi}{122}\PYG{p}{)}
+\PYG{n+nb}{imshow}\PYG{p}{(}\PYG{n}{J}\PYG{p}{);}
+\PYG{n+nb}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}after global threshold\PYGZsq{}}\PYG{p}{);}
+\PYG{c}{\PYGZpc{}\PYGZpc{} function}
+\PYG{k}{function}\PYG{+w}{ }level\PYG{+w}{ }\PYG{p}{=}\PYG{n+nf}{global\PYGZus{}threshold}\PYG{p}{(}I\PYG{p}{)}
+\PYG{n}{I}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{im2double}\PYG{p}{(}\PYG{n}{I}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{M}\PYG{p}{,}\PYG{n}{N}\PYG{p}{]}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{I}\PYG{p}{);}
+\PYG{n}{T0}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{p}{;}
+\PYG{n}{T1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nb}{max}\PYG{p}{(}\PYG{n+nb}{max}\PYG{p}{(}\PYG{n}{I}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{+}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n+nb}{min}\PYG{p}{(}\PYG{n}{I}\PYG{p}{)))}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{n}{columns1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{n}{columns2}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{k}{while}\PYG{+w}{ }\PYG{l+m+mi}{1}
+\PYG{+w}{	}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{M}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{j}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{N}
+\PYG{+w}{			}\PYG{k}{if}\PYG{+w}{ }\PYG{n}{I}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{n}{T1}
+\PYG{+w}{				}\PYG{n}{G1}\PYG{p}{(}\PYG{n}{columns1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{I}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{);}
+\PYG{+w}{				}\PYG{n}{columns1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{columns1}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{			}\PYG{k}{else}\PYG{+w}{	}
+\PYG{+w}{				}\PYG{n}{G2}\PYG{p}{(}\PYG{n}{columns2}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{I}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{);}
+\PYG{+w}{				}\PYG{n}{columns2}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{columns2}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{			}\PYG{k}{end}
+\PYG{+w}{		}\PYG{k}{end}
+\PYG{+w}{	}\PYG{k}{end}
+\PYG{+w}{	}\PYG{n}{ave1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{mean}\PYG{p}{(}\PYG{n}{G1}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{ave2}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{mean}\PYG{p}{(}\PYG{n}{G2}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{T2}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{ave1}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{ave2}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{T2}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{T1}\PYG{p}{)}\PYG{o}{\PYGZlt{}}\PYG{n}{T0}
+\PYG{+w}{		}\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{end}
+\PYG{+w}{	}\PYG{n}{T1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{T2}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{columns1}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{columns2}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{k}{end}
+\PYG{n}{level}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{T2}\PYG{p}{;}
+\PYG{k}{end}
+\end{Verbatim}

@@ -1,0 +1,71 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{sys}
+\PYG{k+kn}{import} \PYG{n+nn}{os}
+\PYG{k+kn}{from} \PYG{n+nn}{IPython.core.interactiveshell} \PYG{k+kn}{import} \PYG{n}{InteractiveShell}
+\PYG{n}{InteractiveShell}\PYG{o}{.}\PYG{n}{ast\PYGZus{}node\PYGZus{}interactivity} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}all\PYGZdq{}}
+
+\PYG{n}{home\PYGZus{}path} \PYG{o}{=} \PYG{err}{!}\PYG{n}{echo} \PYG{err}{\PYGZdl{}}\PYG{p}{\PYGZob{}}\PYG{n}{HOME}\PYG{p}{\PYGZcb{}}
+\PYG{n}{sys}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{home\PYGZus{}path}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}jupyter\PYGZhy{}notebook/\PYGZdq{}}\PYG{p}{))}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}System init success.\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} atlas\PYGZus{}utils是本团队基于pyACL封装好的一套工具库，如果您也想引用的话，请首先将}
+\PYG{c+c1}{\PYGZsh{} https://gitee.com/ascend/samples/tree/master/python/common/atlas\PYGZus{}utils}
+\PYG{c+c1}{\PYGZsh{} 这个路径下的代码引入您的工程中}
+\PYG{k+kn}{from} \PYG{n+nn}{atlas\PYGZus{}utils.acl\PYGZus{}resource} \PYG{k+kn}{import} \PYG{n}{AclResource}
+\PYG{k+kn}{from} \PYG{n+nn}{constants} \PYG{k+kn}{import} \PYG{o}{*}
+\PYG{k+kn}{from} \PYG{n+nn}{acl\PYGZus{}model} \PYG{k+kn}{import} \PYG{n}{Model}
+
+\PYG{c+c1}{\PYGZsh{}创建一个AclResource类的实例}
+\PYG{n}{acl\PYGZus{}resource} \PYG{o}{=} \PYG{n}{AclResource}\PYG{p}{()}
+\PYG{c+c1}{\PYGZsh{}AscendCL资源初始化（封装版本）}
+\PYG{n}{acl\PYGZus{}resource}\PYG{o}{.}\PYG{n}{init}\PYG{p}{()}
+
+\PYG{c+c1}{\PYGZsh{} 上方“init”方法具体实现（仅供参考），请阅读“init()”方法，观察初始化和运行时资源申请的详细操作步骤}
+\PYG{k}{def} \PYG{n+nf}{init}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+    \PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{    Init resource}
+\PYG{l+s+sd}{    \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}init resource stage:\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{ret} \PYG{o}{=} \PYG{n}{acl}\PYG{o}{.}\PYG{n}{init}\PYG{p}{()}
+    \PYG{n}{utils}\PYG{o}{.}\PYG{n}{check\PYGZus{}ret}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl.init\PYGZdq{}}\PYG{p}{,} \PYG{n}{ret}\PYG{p}{)}
+    \PYG{c+c1}{\PYGZsh{}指定用于运算的Device}
+    \PYG{n}{ret} \PYG{o}{=} \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{set\PYGZus{}device}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{device\PYGZus{}id}\PYG{p}{)}
+    \PYG{n}{utils}\PYG{o}{.}\PYG{n}{check\PYGZus{}ret}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl.rt.set\PYGZus{}device\PYGZdq{}}\PYG{p}{,} \PYG{n}{ret}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Set device n success.\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{}显式创建一个Context}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{context}\PYG{p}{,} \PYG{n}{ret} \PYG{o}{=} \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{create\PYGZus{}context}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{device\PYGZus{}id}\PYG{p}{)}
+    \PYG{n}{utils}\PYG{o}{.}\PYG{n}{check\PYGZus{}ret}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl.rt.create\PYGZus{}context\PYGZdq{}}\PYG{p}{,} \PYG{n}{ret}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{}创建一个Stream}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{stream}\PYG{p}{,} \PYG{n}{ret} \PYG{o}{=} \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{create\PYGZus{}stream}\PYG{p}{()}
+    \PYG{n}{utils}\PYG{o}{.}\PYG{n}{check\PYGZus{}ret}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl.rt.create\PYGZus{}stream\PYGZdq{}}\PYG{p}{,} \PYG{n}{ret}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{}获取当前昇腾AI软件栈的运行模式}
+    \PYG{c+c1}{\PYGZsh{}0：ACL\PYGZus{}DEVICE，表示运行在Device的Control CPU上或开发者版上}
+    \PYG{c+c1}{\PYGZsh{}1：ACL\PYGZus{}HOST，表示运行在Host CPU上}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{run\PYGZus{}mode}\PYG{p}{,} \PYG{n}{ret} \PYG{o}{=} \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{get\PYGZus{}run\PYGZus{}mode}\PYG{p}{()}
+    \PYG{n}{utils}\PYG{o}{.}\PYG{n}{check\PYGZus{}ret}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl.rt.get\PYGZus{}run\PYGZus{}mode\PYGZdq{}}\PYG{p}{,} \PYG{n}{ret}\PYG{p}{)}
+
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Init resource success\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{}请阅读下方代码，观察释放运行时资源的详细操作步骤}
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}del\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl resource release all resource\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{resource\PYGZus{}list}\PYG{o}{.}\PYG{n}{destroy}\PYG{p}{()}
+
+    \PYG{c+c1}{\PYGZsh{}调用acl.rt.destroy\PYGZus{}stream接口释放Stream}
+    \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{stream}\PYG{p}{:}
+        \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{destroy\PYGZus{}stream}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{stream}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl resource release stream\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{}调用acl.rt.destroy\PYGZus{}context接口释放Context}
+    \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{context}\PYG{p}{:}
+        \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{destroy\PYGZus{}context}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{context}\PYG{p}{)}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}acl resource release context\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{}调用acl.rt.destroy\PYGZus{}context接口释放Context}
+    \PYG{n}{acl}\PYG{o}{.}\PYG{n}{rt}\PYG{o}{.}\PYG{n}{reset\PYGZus{}device}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{device\PYGZus{}id}\PYG{p}{)}
+    \PYG{n}{acl}\PYG{o}{.}\PYG{n}{finalize}\PYG{p}{()}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Release acl resource success\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}
